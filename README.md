@@ -15,7 +15,7 @@ Thats it, this app just a piece for demonstrating it, how it really happens to h
 ## *Result*
 ![result] (https://github.com/alshell7/flippi/blob/master/flipped_text.png)
 
-## *Flippi Float*
+## *Flippi Float* *(Outside the app)*
 ![flippi_float] (https://github.com/alshell7/flippi/blob/master/flippi_float.png)
 
 ## *Features*
