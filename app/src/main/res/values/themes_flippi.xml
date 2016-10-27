@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Generated with http://android-holo-colors.com -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <style name="Flippi" parent="@style/_Flippi"/>
+
+  <style name="_Flippi" parent="android:Theme.Holo.Light.DarkActionBar">
+
+    <item name="android:editTextBackground">@drawable/flippi_edit_text_holo_light</item>
+
+    <item name="android:textColorHighlight">#99ffa000</item>
+    <item name="android:textSelectHandleLeft">@drawable/flippi_text_select_handle_left</item>
+    <item name="android:textSelectHandleRight">@drawable/flippi_text_select_handle_right</item>
+    <item name="android:textSelectHandle">@drawable/flippi_text_select_handle_middle</item>
+
+    <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewFlippi</item>
+
+    <item name="android:listChoiceIndicatorMultiple">@drawable/flippi_btn_check_holo_light</item>
+
+    <item name="android:listChoiceIndicatorSingle">@drawable/flippi_btn_radio_holo_light</item>
+
+    <item name="android:buttonStyle">@style/ButtonFlippi</item>
+
+    <item name="android:imageButtonStyle">@style/ImageButtonFlippi</item>
+
+    <item name="android:dropDownSpinnerStyle">@style/SpinnerFlippi</item>
+
+    <item name="android:progressBarStyleHorizontal">@style/ProgressBarFlippi</item>
+
+    <item name="android:seekBarStyle">@style/SeekBarFlippi</item>
+
+    <item name="android:ratingBarStyle">@style/RatingBarFlippi</item>
+
+    <item name="android:ratingBarStyleIndicator">@style/RatingBarBigFlippi</item>
+
+    <item name="android:ratingBarStyleSmall">@style/RatingBarSmallFlippi</item>
+
+    <item name="android:buttonStyleToggle">@style/ToggleFlippi</item>
+
+    <item name="android:listChoiceBackgroundIndicator">@drawable/flippi_list_selector_holo_light</item>
+
+    <item name="android:activatedBackgroundIndicator">@drawable/flippi_activated_background_holo_light</item>
+
+    <item name="android:fastScrollThumbDrawable">@drawable/flippi_fastscroll_thumb_holo</item>
+
+  </style>
+
+</resources>

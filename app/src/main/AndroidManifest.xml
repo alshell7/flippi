@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.projects.alshell.flippi" >
+
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/Flippi" >
+        <activity
+            android:name=".MainActivity"
+            android:icon="@drawable/ic_flippi_plain"
+            android:label="@string/app_name"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".About"
+            android:icon="@drawable/ic_flippi_plain"
+            android:label="@string/title_activity_about"
+            android:theme="@style/Theme.Slidr.Slidable" >
+        </activity>
+        <activity
+            android:name=".Splash"
+            android:theme="@style/SplashTheme"
+            android:label="@string/app_name"
+            android:icon="@mipmap/ic_launcher"
+            >
+        </activity>
+        <service android:name=".bubbles.BubblesService"
+                 android:enabled="true"
+                 android:exported="false"
+            >
+        </service>
+    </application>
+
+</manifest>

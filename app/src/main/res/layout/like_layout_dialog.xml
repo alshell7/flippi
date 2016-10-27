@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp"
+                android:theme="@style/Flippi">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="How would you like to rate us ?"
+        android:id="@+id/textView9"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_margin="20dp"/>
+
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ratingBar"
+        android:layout_below="@+id/textView9"
+        android:layout_centerHorizontal="true"
+        android:rating="2"
+        android:stepSize="1"
+        android:paddingBottom="10dp"
+        android:numStars="5"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit Or Share"
+        android:id="@+id/buttonSubmit"
+        android:textColor="@android:color/white"
+        android:layout_below="@+id/editTextFeedback"
+        android:layout_centerHorizontal="true"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextFeedback"
+        android:layout_below="@+id/ratingBar"
+        android:layout_centerHorizontal="true"
+        android:hint="your feedback or provide us more suggestions :)"
+        android:textColorHint="#ffc846"/>
+
+</RelativeLayout>

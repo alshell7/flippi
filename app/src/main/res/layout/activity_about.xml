@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout
+                  android:orientation="vertical"
+                  android:background="@color/background_material_light"
+                  xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_marginBottom="8dp"
+            android:elevation="4dp"
+            android:background="@color/flippi_color">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="About"
+                android:id="@+id/textView3"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:allowUndo="true"
+                android:textColor="@android:color/white"
+                android:textSize="35dp"
+                android:layout_margin="10dp"
+                android:typeface="normal"/>
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:id="@+id/imageView2"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/flippi_48dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Flippi"
+            android:id="@+id/textView4"
+            android:layout_gravity="center_horizontal"
+            android:typeface="monospace"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="40dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="A simple utility to flip and style the text"
+                android:id="@+id/textView5"
+                android:layout_alignParentTop="true"
+                android:typeface="monospace"
+                android:layout_centerInParent="true"
+                android:gravity="center_vertical|center_horizontal"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Version 2.4"
+                android:id="@+id/textView6"
+                android:layout_below="@+id/textView5"
+                android:layout_centerHorizontal="true"
+                android:typeface="monospace"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Developed by alshell7"
+                android:id="@+id/textView7"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:typeface="monospace"/>
+        </RelativeLayout>
+    </LinearLayout>
