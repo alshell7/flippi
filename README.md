@@ -1,8 +1,8 @@
-![logo] (https://github.com/alshell7/flippi/blob/master/app/src/main/res/drawable-xhdpi/flippi_24dp.png)
+![logo](https://github.com/alshell7/flippi/blob/master/app/src/main/res/drawable-xhdpi/flippi_24dp.png)
 # __Flippi__
 *A simple android app to style the text (flip it basically).*
 
-Always wondered how would it be possible to flip the text, when it would still remain the same when you flip your phone and type anything!:wink:. There were many other such apps in the Google Play Store too that could just do it. **Flippi** is just a cool app for text styling. After bit of googling up, since android smoothly supports _Unicode_, found that it were those present in its _Character Table_ [(Check it out here)] (http://unicode-table.com/en/#control-character). The characters are replaced with the respective upside down equivalent unicode character.
+Always wondered how would it be possible to flip the text, when it would still remain the same when you flip your phone and type anything!:wink:. There were many other such apps in the Google Play Store too that could just do it. **Flippi** is just a cool app for text styling. After bit of googling up, since android smoothly supports _Unicode_, found that it were those present in its _Character Table_ [(Check it out here)](http://unicode-table.com/en/#control-character). The characters are replaced with the respective upside down equivalent unicode character.
 
 Something like,
 >Ⅎ U+2132 TURNED CAPITAL F
@@ -10,13 +10,13 @@ Something like,
 Thats it, this app just a piece for demonstrating it, how it really happens to have the text flipped (styled). Those upside down equivalent of the real unicode characters are collected and have been hardcoded inside the resources.
 
 ## *Available Styles*
-![styles] (https://github.com/alshell7/flippi/blob/master/styles.png)
+![styles](https://github.com/alshell7/flippi/blob/master/styles.png)
 
 ## *Result*
-![result] (https://github.com/alshell7/flippi/blob/master/flipped_text.png)
+![result](https://github.com/alshell7/flippi/blob/master/flipped_text.png)
 
 ## *Flippi Float* *(Outside the app)*
-![flippi_float] (https://github.com/alshell7/flippi/blob/master/flippi_float.png)
+![flippi_float](https://github.com/alshell7/flippi/blob/master/flippi_float.png)
 
 ## *Features*
 * Includes four different styles. (one that simply reverses :wink:)
