@@ -2,7 +2,6 @@ package com.projects.alshell.flippi;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.widget.TextView;
