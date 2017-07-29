@@ -76,6 +76,7 @@ public class BubblesService extends Service {
                 }
             }
         });
+
     }
 
     private WindowManager getWindowManager() {

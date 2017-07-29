@@ -22,6 +22,7 @@
 
 package com.projects.alshell.flippi;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -29,10 +30,15 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
+import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
@@ -73,20 +79,20 @@ public class MainActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-       /* Log("SimpleFlip Characters..");
+
+        /* Log("SimpleFlip Characters..");
         for (int i = 0; i < SimpleFlip.length(); i++) {
             Log("Character is : " + ((char) SimpleFlip.charAt(i)));
         }
         Log("Flip test begin..");
         Log("For a : " + getFlippedOrEncircled("owaiz", true));*/
+
         startActivity(new Intent(MainActivity.this, Splash.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        try {
-            initializeBubblesManager();
-            addNewBubble();
-        } catch (Exception e) {
-            Toast.makeText(MainActivity.this, "Oops!, it seems your phone Flippi Float feature :(.", Toast.LENGTH_LONG).show();
-        }
+
+        setFlippiFloatShowing(false);
+        initializeBubblesManager();
+
         if(getActionBar() != null)
         {
             //getActionBar().setHomeButtonEnabled(false);
@@ -627,11 +633,8 @@ public class MainActivity extends Activity
             });
         }
         if (item.getTitle() == "Flippi Float") {
-            try {
-                addNewBubble();
-            } catch (Exception e) {
-                Toast.makeText(MainActivity.this, "Oops!, it seems your phone Flippi Float feature :(.", Toast.LENGTH_LONG).show();
-            }
+
+            addNewBubble();
         }
 
         return super.onOptionsItemSelected(item);
@@ -667,142 +670,186 @@ public class MainActivity extends Activity
     }
     private BubblesManager bubblesManager;
     private void initializeBubblesManager() {
-        bubblesManager = new BubblesManager.Builder(this)
-                .setTrashLayout(R.layout.bubble_trash_layout)
+        if ((!Settings.canDrawOverlays(this)) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            Toast.makeText(this, "Enable the app to draw over, to add flippi float on screen", Toast.LENGTH_LONG).show();
+            Intent myIntent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+            startActivity(myIntent);
+        } else {
+            bubblesManager = new BubblesManager.Builder(this)
+                    .setTrashLayout(R.layout.bubble_trash_layout)
 
-                .setInitializationCallback(new OnInitializedCallback() {
-                    @Override
-                    public void onInitialized() {
-                        addNewBubble();
-                    }
-                })
-                .build();
-        bubblesManager.initialize();
+                    .setInitializationCallback(new OnInitializedCallback() {
+                        @Override
+                        public void onInitialized() {
+                            addNewBubble();
+                        }
+                    })
+                    .build();
+            bubblesManager.initialize();
+        }
     }
+
 
     private void addNewBubble() {
-        BubbleLayout bubbleView = (BubbleLayout) LayoutInflater.from(MainActivity.this).inflate(R.layout.bubble_layout, null);
-        bubbleView.setOnBubbleRemoveListener(new BubbleLayout.OnBubbleRemoveListener() {
-            @Override
-            public void onBubbleRemoved(BubbleLayout bubble) { }
-        });
-        bubbleView.setOnBubbleClickListener(new BubbleLayout.OnBubbleClickListener()
-        {
 
-            @Override
-            public void onBubbleClick(BubbleLayout bubble)
+            BubbleLayout bubbleView = (BubbleLayout) LayoutInflater.from(MainActivity.this).inflate(R.layout.bubble_layout, null);
+            bubbleView.setOnBubbleRemoveListener(new BubbleLayout.OnBubbleRemoveListener()
             {
-                final View stay_top_layout = getLayoutInflater().inflate(R.layout.stay_top_layout, null, false);
-                AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext(), R.style.SplashTheme).setView(stay_top_layout);
-
-                final AlertDialog alertDialog = builder.create();
-                alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-                alertDialog.show();
-
-                final Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_out);
-                animation.setInterpolator(new BounceInterpolator());
-                animation.setDuration(1000);
-                final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-                final Animation shake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
-
-                stay_top_layout.findViewById(R.id.st_copy_button).setOnClickListener(new View.OnClickListener()
+                @Override
+                public void onBubbleRemoved(BubbleLayout bubble)
                 {
-                    @Override
-                    public void onClick(View v)
-                    {
+                    setFlippiFloatShowing(false);
+                }
+            });
+            bubbleView.setOnBubbleClickListener(new BubbleLayout.OnBubbleClickListener()
+            {
 
-                        final String text = ((EditText) stay_top_layout.findViewById(R.id.st_editText)).getText().toString();
-                        final String flipped = MainActivity.getFlippedOrEncircled(text, false, getApplicationContext());
-                        ((EditText) stay_top_layout.findViewById(R.id.st_editText)).setAnimation(shake);
-                        if (!TextUtils.isEmpty(((EditText) stay_top_layout.findViewById(R.id.st_editText)).getText().toString())) {
-                            ClipboardManager manager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                            manager.setText(flipped);
-                            //Animation animation= AnimationUtils.makeOutAnimation(getApplicationContext(), true);
-                            stay_top_layout.setAnimation(animation);
-                            stay_top_layout.animate();
-                            stay_top_layout.getAnimation().setAnimationListener(new Animation.AnimationListener()
-                            {
-                                @Override
-                                public void onAnimationStart(Animation animation)
-                                {
-
-                                }
-
-                                @Override
-                                public void onAnimationEnd(Animation animation)
-                                {
-                                    alertDialog.dismiss();
-                                }
-
-                                @Override
-                                public void onAnimationRepeat(Animation animation)
-                                {
-
-                                }
-                            });
-                            //explosionField.explode(stay_top_layout.findViewById(R.id.to_burst_layout));
-                            Toast toast = Toast.makeText(MainActivity.this, "You can now paste this Flippi text\n any where you can type :)", Toast.LENGTH_LONG);
-                            toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 20);
-                            toast.show();
-                            //alertDialog.dismiss();
-                        } else {
-                            Toast.makeText(getApplicationContext(), "You must enter some text to jazz up !", Toast.LENGTH_SHORT).show();
-                            ((EditText) stay_top_layout.findViewById(R.id.st_editText)).animate();
-                            vibrator.vibrate(300);
-                        }
-                    }
-                });
-                stay_top_layout.findViewById(R.id.st_send_button).setOnClickListener(new View.OnClickListener()
+                @Override
+                public void onBubbleClick(BubbleLayout bubble)
                 {
-                    @Override
-                    public void onClick(View v)
+                    final View stay_top_layout = getLayoutInflater().inflate(R.layout.stay_top_layout, null, false);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext(), R.style.SplashTheme).setView(stay_top_layout);
+
+                    final AlertDialog alertDialog = builder.create();
+                    alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+                    alertDialog.show();
+
+                    final Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_out);
+                    animation.setInterpolator(new BounceInterpolator());
+                    animation.setDuration(1000);
+                    final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                    final Animation shake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
+
+                    stay_top_layout.findViewById(R.id.st_copy_button).setOnClickListener(new View.OnClickListener()
                     {
-                        final String text = ((EditText) stay_top_layout.findViewById(R.id.st_editText)).getText().toString();
-                        final String flipped = MainActivity.getFlippedOrEncircled(text, false, getApplicationContext());
-                        if (!TextUtils.isEmpty(((EditText) stay_top_layout.findViewById(R.id.st_editText)).getText().toString())) {
-                            //explosionField.explode(stay_top_layout.findViewById(R.id.to_burst_layout));
-                            stay_top_layout.setAnimation(animation);
-                            stay_top_layout.animate();
-                            stay_top_layout.getAnimation().setAnimationListener(new Animation.AnimationListener()
-                            {
-                                @Override
-                                public void onAnimationStart(Animation animation)
+                        @Override
+                        public void onClick(View v)
+                        {
+
+                            alertDialog.dismiss();
+
+                            final String text = ((EditText) stay_top_layout.findViewById(R.id.st_editText)).getText().toString();
+                            final String flipped = MainActivity.getFlippedOrEncircled(text, false, getApplicationContext());
+                            ((EditText) stay_top_layout.findViewById(R.id.st_editText)).setAnimation(shake);
+                            if (!TextUtils.isEmpty(((EditText) stay_top_layout.findViewById(R.id.st_editText)).getText().toString())) {
+                                ClipboardManager manager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                                manager.setText(flipped);
+                                //Animation animation= AnimationUtils.makeOutAnimation(getApplicationContext(), true);
+                                stay_top_layout.setAnimation(animation);
+                                stay_top_layout.animate();
+                                stay_top_layout.getAnimation().setAnimationListener(new Animation.AnimationListener()
                                 {
+                                    @Override
+                                    public void onAnimationStart(Animation animation)
+                                    {
 
-                                }
+                                    }
 
-                                @Override
-                                public void onAnimationEnd(Animation animation)
-                                {
-                                    alertDialog.dismiss();
-                                }
+                                    @Override
+                                    public void onAnimationEnd(Animation animation)
+                                    {
+                                        alertDialog.dismiss();
+                                    }
 
-                                @Override
-                                public void onAnimationRepeat(Animation animation)
-                                {
+                                    @Override
+                                    public void onAnimationRepeat(Animation animation)
+                                    {
 
-                                }
-                            });
-                            shareVia(flipped, "Send using ?", "Flippi text", getApplicationContext());
-                            //alertDialog.dismiss();
-                        } else {
-                            Toast.makeText(getApplicationContext(), "You must enter some text to jazz up !", Toast.LENGTH_SHORT).show();
-                            vibrator.vibrate(300);
+                                    }
+                                });
+                                //explosionField.explode(stay_top_layout.findViewById(R.id.to_burst_layout));
+                                Toast toast = Toast.makeText(MainActivity.this, "You can now paste this Flippi text\n any where you can type :)", Toast.LENGTH_LONG);
+                                toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 20);
+                                toast.show();
+
+                            } else {
+                                Toast.makeText(getApplicationContext(), "You must enter some text to jazz up !", Toast.LENGTH_SHORT).show();
+                                ((EditText) stay_top_layout.findViewById(R.id.st_editText)).animate();
+                                vibrator.vibrate(300);
+                            }
                         }
+                    });
+                    stay_top_layout.findViewById(R.id.st_send_button).setOnClickListener(new View.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(View v)
+                        {
+                            alertDialog.dismiss();
 
-                    }
-                });
+                            final String text = ((EditText) stay_top_layout.findViewById(R.id.st_editText)).getText().toString();
+                            final String flipped = MainActivity.getFlippedOrEncircled(text, false, getApplicationContext());
+                            if (!TextUtils.isEmpty(((EditText) stay_top_layout.findViewById(R.id.st_editText)).getText().toString())) {
+                                //explosionField.explode(stay_top_layout.findViewById(R.id.to_burst_layout));
+                                stay_top_layout.setAnimation(animation);
+                                stay_top_layout.animate();
+                                stay_top_layout.getAnimation().setAnimationListener(new Animation.AnimationListener()
+                                {
+                                    @Override
+                                    public void onAnimationStart(Animation animation)
+                                    {
 
-                //Toast.makeText(getApplicationContext(), "Clicked !", Toast.LENGTH_SHORT).show();
-                //startActivity(new Intent(getApplicationContext(), MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY));
+                                    }
+
+                                    @Override
+                                    public void onAnimationEnd(Animation animation)
+                                    {
+                                        alertDialog.dismiss();
+                                    }
+
+                                    @Override
+                                    public void onAnimationRepeat(Animation animation)
+                                    {
+
+                                    }
+                                });
+                                shareVia(flipped, "Send using ?", "Flippi text", getApplicationContext());
+
+                            } else {
+                                Toast.makeText(getApplicationContext(), "You must enter some text to jazz up !", Toast.LENGTH_SHORT).show();
+                                vibrator.vibrate(300);
+                            }
+
+                        }
+                    });
+
+                    //Toast.makeText(getApplicationContext(), "Clicked !", Toast.LENGTH_SHORT).show();
+                    //startActivity(new Intent(getApplicationContext(), MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY));
+                }
+            });
+            bubbleView.setShouldStickToWall(true);
+
+            if(bubblesManager == null){
+                setFlippiFloatShowing(false);
+                initializeBubblesManager();
+            } else {
+                if (!isFlippiFloatShowing()) {
+                    bubblesManager.addBubble(bubbleView, 60, 20);
+                    setFlippiFloatShowing(true);
+                } else {
+                    Toast.makeText(this, "Flippi Float already been added to your screen", Toast.LENGTH_SHORT).show();
+                }
             }
-        });
-        bubbleView.setShouldStickToWall(true);
-        bubblesManager.addBubble(bubbleView, 60, 20);
     }
+
     @Override
     protected void onDestroy() {
         bubblesManager.recycle();
+        setFlippiFloatShowing(false);
         super.onDestroy();
+    }
+
+    public static final String KEY_IS_FLOAT_SHOWING  = "KEY_IS_FLOAT_SHOWING";
+
+    @SuppressLint("ApplySharedPref")
+    private void setFlippiFloatShowing(boolean showing)
+    {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        preferences.edit().putBoolean(KEY_IS_FLOAT_SHOWING, showing).commit();
+    }
+
+    private boolean isFlippiFloatShowing()
+    {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        return  preferences.getBoolean(KEY_IS_FLOAT_SHOWING, false);
     }
 }
