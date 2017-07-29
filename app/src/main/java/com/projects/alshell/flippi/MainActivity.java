@@ -79,13 +79,6 @@ public class MainActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /* Log("SimpleFlip Characters..");
-        for (int i = 0; i < SimpleFlip.length(); i++) {
-            Log("Character is : " + ((char) SimpleFlip.charAt(i)));
-        }
-        Log("Flip test begin..");
-        Log("For a : " + getFlippedOrEncircled("owaiz", true));*/
-
         startActivity(new Intent(MainActivity.this, Splash.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
