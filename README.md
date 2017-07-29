@@ -1,5 +1,11 @@
 ![logo](https://github.com/alshell7/flippi/blob/master/app/src/main/res/drawable-xhdpi/flippi_24dp.png)
+
 # __Flippi__
+
+[![](http://img.shields.io/badge/build-passing-blue.svg)]()
+[![](http://img.shields.io/badge/platform-android-green.svg)](https://developer.android.com/index.html)
+[![](http://img.shields.io/badge/API-14+-brightgreen.svg)]()
+
 *A simple android app to style the text (flip it basically).*
 
 Always wondered how would it be possible to flip the text, when it would still remain the same when you flip your phone and type anything!:wink:. There were many other such apps in the Google Play Store too that could just do it. **Flippi** is just a cool app for text styling. After bit of googling up, since android smoothly supports _Unicode_, found that it were those present in its _Character Table_ [(Check it out here)](http://unicode-table.com/en/#control-character). The characters are replaced with the respective upside down equivalent unicode character.
@@ -23,7 +29,11 @@ Thats it, this app just a piece for demonstrating it, how it really happens to h
 * Flip the text without going to the app (_Flippi Float_)
   * Directly share the flipped text to any other app, or
   * Copy it to the Clipboard.
-  
+
+## Download the APK
+
+To Download and Install Flippi on your device [click here](https://github.com/alshell7/flippi/blob/master/app/app-debug.apk).
+
 ## *License Agreement*
 
 READ CAREFULLY ALL TERMS OF THIS LICENSE AGREEMENT BEFORE USING
