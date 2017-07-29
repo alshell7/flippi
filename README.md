@@ -23,7 +23,11 @@ Thats it, this app just a piece for demonstrating it, how it really happens to h
 * Flip the text without going to the app (_Flippi Float_)
   * Directly share the flipped text to any other app, or
   * Copy it to the Clipboard.
-  
+
+## Download the APK
+
+To Download and Install Flippi on your device [click here](https://github.com/alshell7/flippi/blob/master/app/app-debug.apk).
+
 ## *License Agreement*
 
 READ CAREFULLY ALL TERMS OF THIS LICENSE AGREEMENT BEFORE USING
