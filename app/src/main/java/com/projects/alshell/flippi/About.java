@@ -2,7 +2,10 @@ package com.projects.alshell.flippi;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
+import android.widget.TextView;
 
 import com.projects.alshell.flippi.slidr.Slidr;
 import com.projects.alshell.flippi.slidr.model.SlidrConfig;
@@ -28,6 +31,10 @@ public class About extends Activity
                 .edgeSize(0.58f)
                 .build();
         Slidr.attach(this, mConfig);
+
+        TextView aboutLink = (TextView) findViewById(R.id.textView7);
+        aboutLink.setMovementMethod(LinkMovementMethod.getInstance());
+
     }
 
     @Override
